@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unemployment in Romania 2020</title>
+</head>
+<body>
+    <div class="container">
+        <div class="topBar">
+            <label class="switch">
+                <input type="checkbox" id="switch"/>
+                <span class="slider round"></span>
+            </label>
+            <div class="mainTitle">Romania's unemployment rates in 2020</div>
+        </div>
+        <div class="mapChart">
+            <!-- Dropdown -->
+            <div class="dropdown"> Select month:
+                <select id="month">
+                    <option value="Ianuarie">January</option>
+                    <option value="Februarie">February</option>
+                    <option value="Martie">March</option>
+                    <option value="Aprilie">April</option>
+                </select>
+            </div>
+            <div class="map"></div>
+            <div class="legendContainer">
+                <svg id="mapLegend"></svg>
+            </div>
+            <div id="mapText"></div>
+            <div class="data-source">Data source: <a target="_blank" rel="noopener noreferrer" href="https://data.gov.ro/organization/agentia-nationala-pentru-ocuparea-fortei-de-munca">data.gov.ro/organization/agentia-nationala-pentru-ocuparea-fortei-de-munca</a></div>
+        </div>
+        <div class="lineChart">
+            <div class="lineChartTitle"></div>
+        </div>
+        <div class="ageGroupsChart">
+            <div class="ageChartTitle"></div>
+        </div>
+        <div class="barGroupTitle"></div>
+        <div class="barChartsGroup">
+            <div class="genderBarChart"></div>
+            <div class="payBarChart"></div>
+        </div>
+        <div class="rankingChart">
+            <div class="rankingChartTitle"></div>
+        </div>
+    </div>
+    <script src="bundle.js"></script>
+</body>
+</html>
