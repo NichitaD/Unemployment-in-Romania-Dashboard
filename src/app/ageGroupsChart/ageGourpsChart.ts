@@ -162,4 +162,58 @@ export class AgeGroupsChart {
             return d.value;
         })
     }
+
+    public updateData(newData: any) {
+
+        this.data = newData;
+        let dataset = this.formatData();
+
+        this.xScale = d3.scaleLinear()
+            .range([0, this.width])
+            .domain([0, parseInt(this.getMaxValue(dataset) || "0") ]);
+
+        this.yScale = d3.scaleBand()
+                .rangeRound([this.height, 0])
+                .domain(dataset.map(function (d: any) {
+                    return d.name;
+                }));
+
+        //make y axis to show bar names
+        let yAxis =  d3.axisLeft(this.yScale).scale(this.yScale).ticks(0);
+
+        let gy = this.plot.select(".y-axis").call(yAxis);
+
+        let bars = this.plot.selectAll(".g-container").data(dataset);
+
+        bars.select(".label")
+            .attr("visibility", "hidden")
+
+        // Append rects
+        bars.select(".bar")
+            .attr("y",  (d: any) => {
+                return this.yScale(d.name);
+            })
+            .attr("height", this.yScale.bandwidth() - 3)
+            .attr("x", 0)
+            .attr("width",  (d: any) => {
+                return this.xScale(d.value);
+            });
+
+         //add a value label to the right of each bar
+         bars.select(".label")
+            //y position of the label is halfway down the bar
+            .attr("y",  (d: any) => {
+                return this.yScale(d.name) + this.yScale.bandwidth() / 2 + 3;
+            })
+            //x position is 3 pixels to the right of the bar
+            .attr("x", (d:any) => {
+                return this.xScale(d.value) - 40;
+            })
+            .attr("opacity", "0")
+            .text(function (d: any) {
+                return d.value;
+            });
+
+        window.setTimeout(() => bars.select(".label").attr("visibility", "visible").attr("opacity", "1"), 700);
+    }
 }

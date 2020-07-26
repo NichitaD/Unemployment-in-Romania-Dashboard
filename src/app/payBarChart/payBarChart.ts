@@ -1,10 +1,9 @@
 import * as d3 from 'd3';
 
-const femei = " Numar total someri femei  ";
-const barbati = " Numar total someri barbati  ";
+const indemnizati = " Numar  someri indemnizati  ";
+const neindemnizati = " Numar someri neindemnizati ";
 
-
-export class GenderBarChart {
+export class PayBarChart {
     private data: Array<any>;
     private element: HTMLElement | null;
     private width: number;
@@ -42,8 +41,6 @@ export class GenderBarChart {
         this.width = this.element.offsetWidth;
         this.height = this.element.offsetHeight + 60;
 
-
-
         // Set up parent element and SVG
         this.element.innerHTML = '';
         let svg = d3.select(this.element).append('svg');
@@ -54,7 +51,7 @@ export class GenderBarChart {
         this.plot = svg.append('g')
                         .attr('transform','translate('+ this.margin.left +','+ this.margin.top +')');
 
-        this.tooltip = d3.select(".genderBarChart").append("div")
+        this.tooltip = d3.select(".payBarChart").append("div")
                         .attr("class", "tooltip")
                         .style("visibility", "hidden");
 
@@ -100,17 +97,11 @@ export class GenderBarChart {
                         .enter()
                         .append("rect")
                         .attr("x", (d: any): number => this.xScale(d["text"]) || 0)
-                        .attr("y", this.height)
+                        .attr("y", (d: any) => { return this.yScale(d['value']); })
                         .attr("width", this.xScale.bandwidth() - 6)
-                        .attr("height", 0)
+                        .attr("height", (d: any) => { return this.height - this.yScale(d['value']); })
                         .attr("fill", (d: any) => this.colorPicker(d["text"]));
 
-
-        bars.transition()
-            .duration(3000)
-            // .ease("elastic")
-            .attr("y", (d: any) => { return this.yScale(d['value']); })
-            .attr("height", (d: any) => { return this.height - this.yScale(d['value']); })
 
         // Tooltips
         bars.on("mouseover", (d: any) => {
@@ -131,15 +122,67 @@ export class GenderBarChart {
     private getMaxValue(dataset: any) {
         return d3.max(dataset, function(d: any) { return d['value']; });
     }
-    private colorPicker(gender: string) {
-        return gender == "Barbati" ? "#66b2b2": "#ff6961";
-    }
 
     private formatData() {
         return [
-            {text: "Barbati", value: parseInt(this.data[42][barbati].replace(",","").trim())},
-            {text: "Femei", value: parseInt(this.data[42][femei].replace(",","").trim())}
+            {text: "Indemnizati", value: parseInt(this.data[42][indemnizati].replace(",","").trim())},
+            {text: "Neindemnizati", value: parseInt(this.data[42][neindemnizati].replace(",","").trim())}
         ];
     }
+
+    private colorPicker(type: any) {
+        return type == "Indemnizati" ? "	#ffad60": "#6fcb9f";
+    }
+
+    public updateData(newData: any) {
+        this.data= newData;
+
+        let dataset = this.formatData();
+
+        this.xScale = d3.scaleBand()
+                        .domain(dataset.map(function(d: any) { return d['text']; }))
+                        .rangeRound([0, this.width]);
+
+        this.yScale = d3.scaleLinear()
+                        .domain([0, parseInt(this.getMaxValue(dataset) || "0") ])
+                        .range([this.height, 0]);
+
+        let xAxis = d3.axisBottom(this.xScale)
+                    .scale(this.xScale);
+
+        let yAxis = d3.axisLeft(this.yScale)
+                    .scale(this.yScale)
+                    .ticks(8);
+
+        this.plot.select(".x-axis").call(xAxis);
+        this.plot.select(".y-axis").call(yAxis);
+
+        let bars = this.plot.selectAll("rect")
+                            .data(dataset)
+                            .attr("x", (d: any): number => this.xScale(d["text"]) || 0)
+                            .attr("y", (d: any) => { return this.yScale(d['value']); })
+                            .attr("width", this.xScale.bandwidth() - 6)
+                            .attr("height", (d: any) => { return this.height - this.yScale(d['value']); })
+                            .attr("fill", (d: any) => this.colorPicker(d["text"]));
+
+        // Tooltips
+        bars.on("mouseover", (d: any) => {
+            this.tooltip.transition().duration(500).style("opacity", .85);
+            this.tooltip.html(d['value'])
+                .style("visibility", "visible");
+        })
+        .on("mousemove", (d: any) => {
+            this.tooltip.style("top", d3.event.pageY - 28 + "px")
+                .style("left", d3.event.pageX + "px");
+        })
+        .on("mouseout", (d: any) => {
+            this.tooltip.transition().duration(300)
+                        .style("opacity", 0);
+        });
+    }
+
+
+
+
 
 }

@@ -1,30 +1,39 @@
 import $ from 'jquery'
+import * as d3 from 'd3';
 import { API, Months } from '../api/index';
-import { LineChart } from './lineChart/index';
-import { MapChart } from './mapChart/index';
-import { AgeGroupsChart } from './ageGroupsChart/index';
-import { GenderBarChart } from './genderBarChart/index';
-import { PayBarChart } from './payBarChart/index';
-import { RankingChart } from './rankingChart/index';
+import { LineChart } from './lineChart/lineChart';
+import { MapChart } from './mapChart/mapChart';
+import { AgeGroupsChart } from './ageGroupsChart/ageGourpsChart';
+import { GenderBarChart } from './genderBarChart/genderBarChart';
+import { PayBarChart } from './payBarChart/payBarChart';
+import { RankingChart } from './rankingChart/rankingChart';
 const css = require('./index.css').toString();
+const ageGroups = "ageGroups";
+const general = "general";
 const LIGHT = "light";
 const DARK = "dark";
 
 export const NR_TOTAL_SOMERI = " Numar total someri ";
 
 let api = new API();
-let januaryData;
-let februaryData;
-let marchData;
-let aprilData;
-let groupsJanuaryData;
-let groupsFebruaryData;
-let groupsMarchData;
-let groupsAprilData;
+let januaryData: any;
+let februaryData: any;
+let marchData: any;
+let aprilData: any;
+let groupsJanuaryData: any;
+let groupsFebruaryData: any;
+let groupsMarchData: any;
+let groupsAprilData: any;
 let mapJson;
 let selectedArea = "Romania";
-let selectedMonth = "Ianuarie";
+let selectedMonth = "January";
 let theme = LIGHT;
+let lineChart: LineChart;
+let mapChart: MapChart;
+let ageGroupsChart: AgeGroupsChart;
+let genderBarChart: GenderBarChart;
+let payBarChart: PayBarChart;
+let rankingChart: RankingChart;
 
 let lineChartDataSet;
 
@@ -61,15 +70,16 @@ async function init() {
     ]
 
 
-    let lineChart = new LineChart(lineChartDataSet, document.querySelector('.lineChart'))
-    let mapChart = new MapChart(mapJson, januaryData, document.querySelector('.map'));
-    let ageGroupsChart = new AgeGroupsChart(groupsJanuaryData, document.querySelector('.ageGroupsChart'));
-    let genderBarChart = new GenderBarChart(januaryData, document.querySelector('.genderBarChart'));
-    let payBarChart = new PayBarChart(januaryData, document.querySelector('.payBarChart'));
-    let rankingChart = new RankingChart(januaryData,  document.querySelector('.rankingChart'))
+    lineChart = new LineChart(lineChartDataSet, document.querySelector('.lineChart'));
+    mapChart = new MapChart(mapJson, januaryData, document.querySelector('.map'), selectedMonth);
+    ageGroupsChart = new AgeGroupsChart(groupsJanuaryData, document.querySelector('.ageGroupsChart'));
+    genderBarChart = new GenderBarChart(januaryData, document.querySelector('.genderBarChart'));
+    payBarChart = new PayBarChart(januaryData, document.querySelector('.payBarChart'));
+    rankingChart = new RankingChart(januaryData,  document.querySelector('.rankingChart'))
 
     setTitles();
     setThemeToggleListener();
+    setMonthChangeListener();
 }
 
 function setTitles() {
@@ -100,6 +110,46 @@ function setThemeToggleListener() {
             theme = LIGHT;
         }
     });
+}
+
+function setMonthChangeListener() {
+    document.getElementById("month")!.addEventListener("change", () => {
+        selectedMonth = $("#month :selected").val() as string;
+
+        updateData();
+    });
+}
+
+function updateData() {
+    let newGeneralData = getDataByMonth(selectedMonth, general);
+    let newAgeData = getDataByMonth(selectedMonth, ageGroups);
+
+    lineChart.updateData(newGeneralData);
+    mapChart.updateData(newGeneralData, selectedMonth);
+    ageGroupsChart.updateData(newAgeData);
+    genderBarChart.updateData(newGeneralData);
+    payBarChart.updateData(newGeneralData);
+    rankingChart.updateData(newGeneralData);
+}
+
+function getDataByMonth(month: string, dataType: string) {
+    switch (month) {
+        case "January": {
+            return dataType === general ? januaryData : groupsJanuaryData;
+        }
+
+        case "February": {
+            return dataType === general ? februaryData : groupsFebruaryData;
+        }
+
+        case "March": {
+            return dataType === general ? marchData : groupsMarchData;
+        }
+
+        case "April": {
+            return dataType === general ? aprilData : groupsAprilData;
+        }
+    }
 }
 
 init();

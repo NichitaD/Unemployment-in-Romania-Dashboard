@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import { NR_TOTAL_SOMERI } from '../index'
-import { JUDET } from '../mapChart/index';
-import { ROMANIA_CODE } from '../mapChart/index';
+import { JUDET } from '../mapChart/mapChart';
+import { ROMANIA_CODE } from '../mapChart/mapChart';
 /**
  * A class that builds a line chart based on the received parameters
  */
@@ -152,5 +152,8 @@ export class LineChart {
                 return new Date(2020, 3, 1);
           }
     }
+
+    public updateData(newData: any) {}
+
 
 }

@@ -259,10 +259,8 @@ div.tooltip {
 
 .ageGroupsChart rect {
     fill: var(--ageChartBar);
-    transition: fill 0.7s, color 0.7s;
     transition: fill 0.7s, color 0.7s, width 0.7s;
     transition-timing-function: ease;
-    border-radius: 2px;
 }
 
 .ageChartTitle {

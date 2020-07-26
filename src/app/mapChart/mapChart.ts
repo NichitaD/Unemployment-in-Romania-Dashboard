@@ -27,11 +27,13 @@ export class MapChart {
     private colorDomain: any;
     private selectedArea: string = "Romania";
     private selectedMonth: string;
+    private svg: d3.Selection<SVGSVGElement, unknown, null, undefined>;
 
-    constructor(geoJson: any, data: any, element: HTMLElement | null) {
+    constructor(geoJson: any, data: any, element: HTMLElement | null, selectedMonth: string) {
         this.data = data;
         this.element = element;
         this.geoJson = geoJson;
+        this.selectedMonth = selectedMonth;
         this.height = 0;
         this.width = 0;
         this.leftPadding = "12";
@@ -75,8 +77,8 @@ export class MapChart {
 
         // Set up parent element and SVG
         this.element.innerHTML = '';
-        let svg = d3.select(this.element).append('svg');
-        svg.attr("viewBox", "0 0 " + this.width + " " + this.height )
+        this.svg = d3.select(this.element).append('svg');
+        this.svg.attr("viewBox", "0 0 " + this.width + " " + this.height )
                                 .attr("preserveAspectRatio", "xMinYMin");
 
         let center = d3.geoCentroid(this.geoJson);
@@ -88,7 +90,7 @@ export class MapChart {
 
         let tooltip = d3.select(".mapChart").append("div").attr("class", "tooltip").style("opacity", 0);
 
-        svg.selectAll("path")
+        this.svg.selectAll("path")
             .data(this.geoJson.features)
             .enter()
             .append("path")
@@ -187,16 +189,50 @@ export class MapChart {
         });
 
         // Build bottom text
-        $('#mapText').html(`<strong>${selectdeAreaData[NR_TOTAL_SOMERI]}</strong> of the citizens of <strong>${this.selectedArea}</strong> were unemployed in ${this.getMonth(this.selectedMonth)},
+        $('#mapText').html(`<strong>${selectdeAreaData[NR_TOTAL_SOMERI]}</strong> of the citizens of <strong>${this.selectedArea}</strong> were unemployed in <strong>${this.selectedMonth}</strong>,
                             totaling up to <strong>${selectdeAreaData[RATA].trim()}%</strong> of the population.`);
     }
 
-    private getMonth(romanianMonth: string) {
-        switch (romanianMonth) {
-            case "Ianuarie": return "January"
-            case "Februarie": return "February"
-            case "Martie": return "March"
-            case "Aprilie": return "April"
-        }
+    public updateData(newData: any, selectedMonth: string) {
+        this.data = newData;
+        this.selectedMonth = selectedMonth;
+
+        this.joinData(this.data, this.geoJson);
+
+        this.svg.selectAll("path")
+            .attr("fill", (d: any) => {
+                let value = d.properties.nrSomeri;
+
+                if(value) {
+                    // TODO: Check if this works
+                    if(d.properties.name.toLowerCase() == this.selectedArea.toLowerCase()) {
+                        return "#004369";
+                    }
+                    return this.colorDomain((value));
+                } else {
+                    return "#666666";
+                }
+            });
+
+        // Change legend
+
+        let legendData: Array<number> = [];
+
+        this.geoJson.features.forEach((prop: any) => {
+            var val = prop.properties.nrSomeri;
+
+            if (val) {
+                legendData.push(val);
+            }
+        });
+
+        legendData.sort(function(a,b){ return a-b;});
+
+        d3.select("#mapLegend").selectAll("text")
+                    .data([legendData[0], legendData[legendData.length-1]])
+                    .text((d) => d)
+
+        this.buildBottomText(this.data);
     }
+
 }
