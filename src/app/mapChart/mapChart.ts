@@ -25,17 +25,18 @@ export class MapChart {
     private leftPadding: string;
     private geoJson: any;
     private colorDomain: any;
-    private selectedArea: string = "Romania";
+    private selectedArea: string;
     private selectedMonth: string;
     private svg: d3.Selection<SVGSVGElement, unknown, null, undefined>;
 
-    constructor(geoJson: any, data: any, element: HTMLElement | null, selectedMonth: string) {
+    constructor(geoJson: any, data: any, element: HTMLElement | null, selectedMonth: string, selectedArea: string) {
         this.data = data;
         this.element = element;
         this.geoJson = geoJson;
         this.selectedMonth = selectedMonth;
         this.height = 0;
         this.width = 0;
+        this.selectedArea = selectedArea;
         this.leftPadding = "12";
 
         let selectedNode = d3.select("#month").node();
@@ -121,6 +122,11 @@ export class MapChart {
                 tooltip.style("left", (xPosition + 9) + "px")
                     .style("top", (yPosition - 60) + "px");
             })
+            .on("click", (d: any, i) => {
+                let event = new Event('changedArea') as any;
+                event.selectedArea = d.properties.name.toLowerCase() === this.selectedArea.toLowerCase() ? "Romania" : d.properties.name;
+                document.dispatchEvent(event);
+            })
     }
 
     private joinData(data: any, json: any) {
@@ -193,7 +199,7 @@ export class MapChart {
                             totaling up to <strong>${selectdeAreaData[RATA].trim()}%</strong> of the population.`);
     }
 
-    public updateData(newData: any, selectedMonth: string) {
+    public updateData(newData: any, selectedMonth: string, selectedArea: string, areaChanged: boolean) {
         this.data = newData;
         this.selectedMonth = selectedMonth;
 
@@ -204,18 +210,18 @@ export class MapChart {
                 let value = d.properties.nrSomeri;
 
                 if(value) {
-                    // TODO: Check if this works
-                    if(d.properties.name.toLowerCase() == this.selectedArea.toLowerCase()) {
-                        return "#004369";
-                    }
                     return this.colorDomain((value));
                 } else {
                     return "#666666";
                 }
             });
 
-        // Change legend
+        this.visuallySelectArea(this.selectedArea, selectedArea, areaChanged);
 
+
+        this.selectedArea = selectedArea;
+
+        // Change legend
         let legendData: Array<number> = [];
 
         this.geoJson.features.forEach((prop: any) => {
@@ -233,6 +239,40 @@ export class MapChart {
                     .text((d) => d)
 
         this.buildBottomText(this.data);
+    }
+
+    private visuallySelectArea(oldArea: string, newArea: string, areaChanged: boolean) {
+
+        if (areaChanged) {
+            // Cancel selection
+            if(oldArea.trim().toLowerCase() === newArea.trim().toLowerCase()) {
+                d3.select(".path-" + oldArea).attr("fill", (d: any) => {
+                    var value = d.properties.nrSomeri;
+
+                    if(value) {
+                        return this.colorDomain((value));
+                    } else {
+                        return "#666666";
+                    }
+                })
+
+                return;
+            }
+
+            // Deselect old area
+            d3.select(".path-" + oldArea).attr("fill", (d: any) => {
+                var value = d.properties.nrSomeri;
+
+                if(value) {
+                    return this.colorDomain((value));
+                } else {
+                    return "#666666";
+                }
+            });
+        }
+
+        // Select new area
+        d3.select(".path-" + newArea).attr("fill", "#00238b");
     }
 
 }

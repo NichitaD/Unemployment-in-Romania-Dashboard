@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import { JUDET, ROMANIA_CODE } from '../mapChart/mapChart';
 
 const indemnizati = " Numar  someri indemnizati  ";
 const neindemnizati = " Numar someri neindemnizati ";
@@ -12,14 +13,15 @@ export class PayBarChart {
     private plot: any;
     private xScale: d3.ScaleBand<string>;
     private yScale: d3.ScaleLinear<number, number>;
-    private selectedArea: string = "Romania";
+    private selectedArea: string;
     private tooltip: d3.Selection<HTMLDivElement, unknown, HTMLElement, any>;
 
-    constructor(data: any, element: HTMLElement | null) {
+    constructor(data: any, element: HTMLElement | null, selectedArea: string) {
         this.data = data;
         this.element = element;
         this.height = 0;
         this.width = 0;
+        this.selectedArea = selectedArea;
 
         this.draw();
     }
@@ -124,9 +126,16 @@ export class PayBarChart {
     }
 
     private formatData() {
+        let selectedAreaData = this.data.find(set => {
+            if (this.selectedArea == "Romania") {
+                return set[JUDET].trim() == ROMANIA_CODE;
+            }
+            return set[JUDET].trim() == this.selectedArea.toUpperCase()
+        });
+
         return [
-            {text: "Indemnizati", value: parseInt(this.data[42][indemnizati].replace(",","").trim())},
-            {text: "Neindemnizati", value: parseInt(this.data[42][neindemnizati].replace(",","").trim())}
+            {text: "Indemnizati", value: parseInt(selectedAreaData[indemnizati].replace(",","").trim())},
+            {text: "Neindemnizati", value: parseInt(selectedAreaData[neindemnizati].replace(",","").trim())}
         ];
     }
 
@@ -134,8 +143,9 @@ export class PayBarChart {
         return type == "Indemnizati" ? "	#ffad60": "#6fcb9f";
     }
 
-    public updateData(newData: any) {
+    public updateData(newData: any, selectedArea: string) {
         this.data= newData;
+        this.selectedArea = selectedArea;
 
         let dataset = this.formatData();
 

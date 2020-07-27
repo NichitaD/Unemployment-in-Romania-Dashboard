@@ -13,14 +13,15 @@ export class RankingChart {
     private plot: any;
     private xScale: any;
     private yScale: any;
-    private selectedArea: string = "Romania";
+    private selectedArea: string;
     private colorDomain: any;
 
-    constructor(data: any, element: HTMLElement | null) {
+    constructor(data: any, element: HTMLElement | null, selectedArea: string) {
         this.data = data;
         this.element = element;
         this.height = 0;
         this.width = 0;
+        this.selectedArea = selectedArea;
 
         this.colorDomain = d3.scaleLinear<string>().range(['#fef0d9','#b30000']);
 
@@ -153,7 +154,7 @@ export class RankingChart {
         })
     }
 
-    public updateData(newData: any) {
+    public updateData(newData: any, selectedArea: string) {
 
         this.data = newData;
         let dataset = this.formatData();

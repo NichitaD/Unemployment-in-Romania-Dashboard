@@ -7,6 +7,7 @@ import { AgeGroupsChart } from './ageGroupsChart/ageGourpsChart';
 import { GenderBarChart } from './genderBarChart/genderBarChart';
 import { PayBarChart } from './payBarChart/payBarChart';
 import { RankingChart } from './rankingChart/rankingChart';
+import { ILineChartData } from './types'
 const css = require('./index.css').toString();
 const ageGroups = "ageGroups";
 const general = "general";
@@ -34,8 +35,7 @@ let ageGroupsChart: AgeGroupsChart;
 let genderBarChart: GenderBarChart;
 let payBarChart: PayBarChart;
 let rankingChart: RankingChart;
-
-let lineChartDataSet;
+let lineChartDataSet: Array<ILineChartData>;
 
 async function init() {
     januaryData = await api.getDataByMonth(Months.January);
@@ -70,16 +70,17 @@ async function init() {
     ]
 
 
-    lineChart = new LineChart(lineChartDataSet, document.querySelector('.lineChart'));
-    mapChart = new MapChart(mapJson, januaryData, document.querySelector('.map'), selectedMonth);
-    ageGroupsChart = new AgeGroupsChart(groupsJanuaryData, document.querySelector('.ageGroupsChart'));
-    genderBarChart = new GenderBarChart(januaryData, document.querySelector('.genderBarChart'));
-    payBarChart = new PayBarChart(januaryData, document.querySelector('.payBarChart'));
-    rankingChart = new RankingChart(januaryData,  document.querySelector('.rankingChart'))
+    lineChart = new LineChart(lineChartDataSet, document.querySelector('.lineChart'), selectedArea);
+    mapChart = new MapChart(mapJson, januaryData, document.querySelector('.map'), selectedMonth, selectedArea);
+    ageGroupsChart = new AgeGroupsChart(groupsJanuaryData, document.querySelector('.ageGroupsChart'), selectedArea);
+    genderBarChart = new GenderBarChart(januaryData, document.querySelector('.genderBarChart'), selectedArea);
+    payBarChart = new PayBarChart(januaryData, document.querySelector('.payBarChart'), selectedArea);
+    rankingChart = new RankingChart(januaryData,  document.querySelector('.rankingChart'), selectedArea)
 
     setTitles();
     setThemeToggleListener();
     setMonthChangeListener();
+    setAreaChangeListener()
 }
 
 function setTitles() {
@@ -116,20 +117,30 @@ function setMonthChangeListener() {
     document.getElementById("month")!.addEventListener("change", () => {
         selectedMonth = $("#month :selected").val() as string;
 
-        updateData();
+        updateData(false);
     });
 }
 
-function updateData() {
+function setAreaChangeListener() {
+    document.addEventListener("changedArea", (event: any) => {
+        selectedArea = event.selectedArea;
+
+        updateData(true);
+    });
+}
+
+function updateData(areaChanged: boolean) {
     let newGeneralData = getDataByMonth(selectedMonth, general);
     let newAgeData = getDataByMonth(selectedMonth, ageGroups);
 
-    lineChart.updateData(newGeneralData);
-    mapChart.updateData(newGeneralData, selectedMonth);
-    ageGroupsChart.updateData(newAgeData);
-    genderBarChart.updateData(newGeneralData);
-    payBarChart.updateData(newGeneralData);
-    rankingChart.updateData(newGeneralData);
+    lineChart.updateData(lineChartDataSet, selectedArea);
+    mapChart.updateData(newGeneralData, selectedMonth, selectedArea, areaChanged);
+    ageGroupsChart.updateData(newAgeData, selectedArea);
+    genderBarChart.updateData(newGeneralData, selectedArea);
+    payBarChart.updateData(newGeneralData, selectedArea);
+    rankingChart.updateData(newGeneralData, selectedArea);
+
+    setTitles();
 }
 
 function getDataByMonth(month: string, dataType: string) {

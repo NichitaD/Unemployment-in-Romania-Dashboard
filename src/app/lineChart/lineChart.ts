@@ -18,13 +18,15 @@ export class LineChart {
     private xScale: any;
     private yScale: any;
     private leftPadding: string;
-    private selectedArea: string = "Romania";
+    private selectedArea: string;
+    private tooltip: d3.Selection<HTMLDivElement, unknown, HTMLElement, any>;
 
-    constructor(data: any, element: HTMLElement | null) {
+    constructor(data: any, element: HTMLElement | null, selectedArea: string) {
         this.data = data;
         this.element = element;
         this.height = 0;
         this.width = 0;
+        this.selectedArea = selectedArea;
         this.minDate = new Date('2020-01-01T00:00:00Z'); // January 2020
         this.maxDate = new Date('2020-04-01T00:00:00Z'); // April 2020
         this.leftPadding = "12";
@@ -56,17 +58,16 @@ export class LineChart {
         this.plot = svg.append('g')
                         .attr('transform','translate('+this.margin.left+','+this.margin.top+')');
 
-        let tooltip = d3.select(".lineChart").append("div").attr("class", "tooltip").style("opacity", 0);
+        this.tooltip = d3.select(".lineChart").append("div").attr("class", "tooltip").style("opacity", 0);
 
         // Create the other stuff
         this.createScales();
         this.addAxes();
-        this.addLine(tooltip);
+        this.addLine();
     }
 
     private createScales() {
 
-        // TODO: Format this to select selected area, not only Romania
         let yExtent = [250000, d3.max(this.data, (d) => {
             return this.formatValue(d.data[42][NR_TOTAL_SOMERI]) + 2000
         }) || 250000];
@@ -98,7 +99,7 @@ export class LineChart {
         return parseInt(value.replace(",","").trim())
     }
 
-    private addLine(tooltip: any) {
+    private addLine() {
         let line = d3.line()
                     .x((d: any) => this.xScale(this.getDate(d.month)))
                     .y((d: any) => this.yScale(this.formatValue(d.data[42][NR_TOTAL_SOMERI])))
@@ -126,15 +127,15 @@ export class LineChart {
                 .attr("cy", (d: any) => this.yScale(this.formatValue(d.data[42][NR_TOTAL_SOMERI])))
                 .attr("r", 6)
                 .attr("transform", `translate(${this.leftPadding}, 0)`)
-                .on("mouseover", function(d: any){
-                    var selectedState = d.data.find((set: any) => set[JUDET].trim() == areaCode);
-                    tooltip.transition().duration(500).style("opacity", .85);
-                    tooltip.html("<strong>"+ selectedState[NR_TOTAL_SOMERI].replace(",","").trim() + "</strong>")
+                .on("mouseover", (d: any) => {
+                    let selectedState = d.data.find((set: any) => set[JUDET].trim() == areaCode);
+                    this.tooltip.transition().duration(500).style("opacity", .85);
+                    this.tooltip.html("<strong>"+ selectedState[NR_TOTAL_SOMERI].replace(",","").trim() + "</strong>")
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY -28) + "px")
                 })
-                .on("mouseout", function(d: any) {
-                    tooltip.transition().duration(300)
+                .on("mouseout", (d: any) => {
+                    this.tooltip.transition().duration(300)
                             .style("opacity", 0);
                 })
 
@@ -153,7 +154,65 @@ export class LineChart {
           }
     }
 
-    public updateData(newData: any) {}
+    public updateData(newData: any, selectedArea: string) {
+        this.selectedArea = selectedArea.toUpperCase();
+
+        let areaCode = this.selectedArea == "Romania" ? ROMANIA_CODE : this.selectedArea;
+
+        let yExtent = [d3.min(this.data, (d, i) => {
+                            let selectedState = d.data.find((set: any) => set[JUDET].trim() == areaCode);
+                            return this.formatValue(selectedState[NR_TOTAL_SOMERI]) - 2000
+                        }) || 0,
+                        d3.max(this.data, (d) => {
+                            let selectedState = d.data.find((set: any) => set[JUDET].trim() == areaCode);
+                            return this.formatValue(selectedState[NR_TOTAL_SOMERI]) + 2000
+                        }) || 0];
+
+        this.xScale = d3.scaleUtc().domain([this.minDate, this.maxDate])
+                                    .range([0, this.width - this.margin.right]);
+
+        this.yScale = d3.scaleLinear().domain(yExtent)
+                                    .range([this.height-(this.margin.top+this.margin.bottom), 0]);
+
+        let xAxis = d3.axisBottom(this.xScale).scale(this.xScale).ticks(4);
+        (xAxis as any).tickFormat(d3.timeFormat("%B"))
+
+        let yAxis = d3.axisLeft(this.yScale).ticks(5);
+
+        let line = d3.line()
+                    .x((d: any) => this.xScale(this.getDate(d.month)))
+                    .y((d: any) => {
+                        let selectedState = d.data.find((set: any) => set[JUDET].trim() == areaCode);
+                        return this.yScale(this.formatValue(selectedState[NR_TOTAL_SOMERI]))
+                    });
+
+        this.plot.selectAll('.line-path')
+                .datum(this.data)
+                .attr('d',line)
+                .attr("transform", `translate(${this.leftPadding}, 0)`)
+                .attr("fill", 'none')
+                .attr('stroke-width', '4px');
+
+        this.plot.selectAll(".line-chart-dots")
+                .attr("cx", (d: any) => this.xScale(this.getDate(d.month)))
+                .attr("cy", (d: any) => {
+                    let selectedState = d.data.find((set: any) => set[JUDET].trim() == areaCode);
+                    return this.yScale(this.formatValue(selectedState[NR_TOTAL_SOMERI]))
+                })
+                .attr("r", 6)
+                .attr("transform", `translate(${this.leftPadding}, 0)`)
+                .on("mouseover", (d: any) => {
+                    let selectedState = d.data.find((set: any) => set[JUDET].trim() == areaCode);
+                    this.tooltip.transition().duration(500).style("opacity", .85);
+                    this.tooltip.html("<strong>"+ selectedState[NR_TOTAL_SOMERI].replace(",","").trim() + "</strong>")
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY -28) + "px")
+                })
+                .on("mouseout", (d: any) => {
+                    this.tooltip.transition().duration(300)
+                            .style("opacity", 0);
+                });
+    }
 
 
 }

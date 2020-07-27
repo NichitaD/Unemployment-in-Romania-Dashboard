@@ -18,13 +18,14 @@ export class AgeGroupsChart {
     private plot: any;
     private xScale: any;
     private yScale: any;
-    private selectedArea: string = "Romania";
+    private selectedArea: string;
 
-    constructor(data: any, element: HTMLElement | null) {
+    constructor(data: any, element: HTMLElement | null, selectedArea: string) {
         this.data = data;
         this.element = element;
         this.height = 0;
         this.width = 0;
+        this.selectedArea = selectedArea;
 
         this.draw();
     }
@@ -163,9 +164,11 @@ export class AgeGroupsChart {
         })
     }
 
-    public updateData(newData: any) {
+    public updateData(newData: any, selectedArea: string) {
 
         this.data = newData;
+        this.selectedArea = selectedArea;
+
         let dataset = this.formatData();
 
         this.xScale = d3.scaleLinear()

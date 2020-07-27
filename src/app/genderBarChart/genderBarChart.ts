@@ -1,4 +1,6 @@
 import * as d3 from 'd3';
+import { selection } from 'd3';
+import { JUDET, ROMANIA_CODE } from '../mapChart/mapChart';
 
 const femei = " Numar total someri femei  ";
 const barbati = " Numar total someri barbati  ";
@@ -13,14 +15,15 @@ export class GenderBarChart {
     private plot: any;
     private xScale: d3.ScaleBand<string>;
     private yScale: d3.ScaleLinear<number, number>;
-    private selectedArea: string = "Romania";
+    private selectedArea: string;
     private tooltip: d3.Selection<HTMLDivElement, unknown, HTMLElement, any>;
 
-    constructor(data: any, element: HTMLElement | null) {
+    constructor(data: any, element: HTMLElement | null, selectedArea: string) {
         this.data = data;
         this.element = element;
         this.height = 0;
         this.width = 0;
+        this.selectedArea = selectedArea;
 
         this.draw();
     }
@@ -130,14 +133,23 @@ export class GenderBarChart {
     }
 
     private formatData() {
+
+        let selectedAreaData = this.data.find(set => {
+            if (this.selectedArea == "Romania") {
+                return set[JUDET].trim() == ROMANIA_CODE;
+            }
+            return set[JUDET].trim() == this.selectedArea.toUpperCase()
+        });
+
         return [
-            {text: "Barbati", value: parseInt(this.data[42][barbati].replace(",","").trim())},
-            {text: "Femei", value: parseInt(this.data[42][femei].replace(",","").trim())}
+            {text: "Barbati", value: parseInt(selectedAreaData[barbati].replace(",","").trim())},
+            {text: "Femei", value: parseInt(selectedAreaData[femei].replace(",","").trim())}
         ];
     }
 
-    public updateData(newData: any) {
-        this.data= newData;
+    public updateData(newData: any, selectedArea: string) {
+        this.data = newData;
+        this.selectedArea = selectedArea;
 
         let dataset = this.formatData();
 
