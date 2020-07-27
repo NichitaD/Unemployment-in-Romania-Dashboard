@@ -76,6 +76,16 @@ export class MapChart {
             left: 10
         };
 
+        let scale;
+
+        let screensize = document.documentElement.clientWidth;
+        if (screensize  < 1700) {
+            scale = 3000;
+        }
+        else {
+            scale = 3500;
+        }
+
         // Set up parent element and SVG
         this.element.innerHTML = '';
         this.svg = d3.select(this.element).append('svg');
@@ -83,7 +93,6 @@ export class MapChart {
                                 .attr("preserveAspectRatio", "xMinYMin");
 
         let center = d3.geoCentroid(this.geoJson);
-        let scale = 3500;
         let offset: [number, number] =  [(this.width/2), this.height - 200];
         let projection = d3.geoMercator().center(center).translate(offset).scale(scale);
 

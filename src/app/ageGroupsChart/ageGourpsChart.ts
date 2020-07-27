@@ -210,7 +210,7 @@ export class AgeGroupsChart {
             })
             //x position is 3 pixels to the right of the bar
             .attr("x", (d:any) => {
-                return this.xScale(d.value) - 40;
+                return this.xScale(d.value) - (d.value / 1000 > 1 ? 40 : 32);
             })
             .attr("opacity", "0")
             .text(function (d: any) {

@@ -63,6 +63,10 @@ export class API {
         }
     }
 
+    /**
+     * Returns the unemployment data fir the age groups chart, based on the recieved month
+     * @param month
+     */
     public getAgeGroupsDataByMonth(month: string): Promise<d3.DSVRowArray<string>> | undefined{
         switch (month) {
             case Months.January: {

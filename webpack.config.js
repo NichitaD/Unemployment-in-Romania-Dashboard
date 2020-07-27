@@ -23,11 +23,19 @@ module.exports = {
             {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
-            }
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                  {
+                    loader: 'file-loader',
+                  },
+                ],
+              }
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js', '.json', '.csv', '.css'],
+        extensions: ['.ts', '.js', '.json', '.csv', '.css', '.png', '.gif'],
     },
     output: {
         publicPath: 'dist',

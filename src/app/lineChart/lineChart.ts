@@ -85,13 +85,13 @@ export class LineChart {
         var yAxis = d3.axisLeft(this.yScale).ticks(5);
 
         this.plot.append("g")
-                .attr("class", "x axis")
+                .attr("class", "x-axis")
                 .attr("transform", `translate(${this.leftPadding},${(this.height-(this.margin.top + this.margin.bottom))})`)
                 .attr("margin-left", "12px")
                 .call(xAxis);
 
         this.plot.append("g")
-                .attr("class", "y axis")
+                .attr("class", "y-axis")
                 .call(yAxis)
     }
 
@@ -157,7 +157,7 @@ export class LineChart {
     public updateData(newData: any, selectedArea: string) {
         this.selectedArea = selectedArea.toUpperCase();
 
-        let areaCode = this.selectedArea == "Romania" ? ROMANIA_CODE : this.selectedArea;
+        let areaCode = this.selectedArea == "ROMANIA" ? ROMANIA_CODE : this.selectedArea;
 
         let yExtent = [d3.min(this.data, (d, i) => {
                             let selectedState = d.data.find((set: any) => set[JUDET].trim() == areaCode);

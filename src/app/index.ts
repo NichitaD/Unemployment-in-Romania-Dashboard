@@ -38,6 +38,9 @@ let rankingChart: RankingChart;
 let lineChartDataSet: Array<ILineChartData>;
 
 async function init() {
+    // The display of the container is set to none on initiation, because of the loading gif
+    $(".container").css("display","grid");
+
     januaryData = await api.getDataByMonth(Months.January);
     februaryData = await api.getDataByMonth(Months.February);
     marchData = await api.getDataByMonth(Months.March);
@@ -69,7 +72,6 @@ async function init() {
         }
     ]
 
-
     lineChart = new LineChart(lineChartDataSet, document.querySelector('.lineChart'), selectedArea);
     mapChart = new MapChart(mapJson, januaryData, document.querySelector('.map'), selectedMonth, selectedArea);
     ageGroupsChart = new AgeGroupsChart(groupsJanuaryData, document.querySelector('.ageGroupsChart'), selectedArea);
@@ -80,7 +82,11 @@ async function init() {
     setTitles();
     setThemeToggleListener();
     setMonthChangeListener();
-    setAreaChangeListener()
+    setAreaChangeListener();
+
+    window.setTimeout(() => {
+        $(".loading").css("display","none");
+    }, 1500);
 }
 
 function setTitles() {

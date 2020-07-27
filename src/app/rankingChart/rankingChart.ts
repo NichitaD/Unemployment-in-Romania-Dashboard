@@ -44,8 +44,15 @@ export class RankingChart {
             return;
         }
 
-        this.width = this.element.offsetWidth - 150;
-        this.height = this.element.offsetHeight - 20;
+        let screensize = document.documentElement.clientWidth;
+        if (screensize  < 1700) {
+            this.width = this.element.offsetWidth - 150;
+            this.height = this.element.offsetHeight - 9;
+        }
+        else {
+            this.width = this.element.offsetWidth - 150;
+            this.height = this.element.offsetHeight - 20;
+        }
 
         this.margin = {
             top: 20,
