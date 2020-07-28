@@ -6,3 +6,7 @@ The charts are divided between these main categories: general evolution of unemp
 You can change the month from the dropdowm above the map, and you can also focus on a particular county by clicking it on the map. You can also change the theme from the toggle in the top right corner.
 
 More data will be added as the pandemic goes on. Unfortunately the data from April and the one from May are exactly the same (that's how the government uploaded it), so we can't have a 100% precise visualization of the evolution of the unemployment rates.
+
+
+![visualizationScreenshot](https://user-images.githubusercontent.com/53866394/88703012-d7e6ce00-d114-11ea-8468-ded3bd2b3370.png)
+
