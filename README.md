@@ -7,6 +7,8 @@ You can change the month from the dropdowm above the map, and you can also focus
 
 More data will be added as the pandemic goes on. Unfortunately the data from April and the one from May are exactly the same (that's how the government uploaded it), so we can't have a 100% precise visualization of the evolution of the unemployment rates.
 
+Link: https://nichitad.github.io/Unemployment-in-Romania-Dashboard/
+
 
 ![visualizationScreenshot](https://user-images.githubusercontent.com/53866394/88703012-d7e6ce00-d114-11ea-8468-ded3bd2b3370.png)
 
