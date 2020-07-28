@@ -4,17 +4,23 @@ let ianuariePath = "files/someriIanuarie.csv";
 let februariePath = "files/someriFebruarie.csv";
 let martiePath = "files/someriMartie.csv";
 let apriliePath = "files/someriAprilie.csv";
+let maiPath = "files/someriMai.csv";
+let iuniePath = "files/someriIunie.csv";
 let grupuriIanuariePath = "files/grupeVarstaIanuarie.csv";
 let grupuriFebruariePath = "files/grupeVarstaFebruarie.csv";
 let grupuriMartiePath = "files/grupeVarstaMartie.csv";
 let grupuriApriliePath = "files/grupeVarstaAprilie.csv";
+let grupuriMaiPath = "files/grupeVarstaMai.csv";
+let grupuriIuniePath = "files/grupeVarstaIunie.csv";
 let romaniaGeoPath = "files/romania.json";
 
 export enum Months {
     January = "Ianuarie",
     February = "Februarie",
     March = "Martie",
-    April  = "Aprilie"
+    April  = "Aprilie",
+    May = "Mai",
+    June = "Iunie"
 }
 
 /**
@@ -25,10 +31,14 @@ export class API {
     private someriFebruarie: any;
     private someriMartie: any;
     private someriAprilie: any;
+    private someriMai: any;
+    private someriIunie: any;
     private grupuriIanuarie: any;
     private grupuriFebruarie: any;
     private grupuriAprilie: any;
     private grupuriMartie: any;
+    private grupuriMai: any;
+    private grupuriIunie: any;
 
 
     constructor(){}
@@ -60,6 +70,12 @@ export class API {
             case Months.April: {
                 return this.someriAprilie ? this.someriAprilie : d3.csv(apriliePath, (data) => this.someriAprilie = data);
             }
+            case Months.May : {
+                return this.someriMai ? this.someriMai : d3.csv(maiPath, (data) => this.someriMai = data);
+            }
+            case Months.June : {
+                return this.someriIunie ? this.someriIunie : d3.csv(iuniePath, (data) => this.someriIunie = data);
+            }
         }
     }
 
@@ -83,6 +99,12 @@ export class API {
 
             case Months.April: {
                 return this.grupuriAprilie ? this.grupuriAprilie : d3.csv(grupuriApriliePath, (data) => this.grupuriAprilie = data);
+            }
+            case Months.May: {
+                return this.grupuriMai ? this.grupuriMai : d3.csv(grupuriMaiPath, (data) => this.grupuriMai = data);
+            }
+            case Months.June: {
+                return this.grupuriIunie ? this.grupuriIunie : d3.csv(grupuriIuniePath, (data) => this.grupuriIunie = data);
             }
         }
     }

@@ -28,7 +28,7 @@ export class LineChart {
         this.width = 0;
         this.selectedArea = selectedArea;
         this.minDate = new Date('2020-01-01T00:00:00Z'); // January 2020
-        this.maxDate = new Date('2020-04-01T00:00:00Z'); // April 2020
+        this.maxDate = new Date('2020-06-01T00:00:00Z'); // April 2020
         this.leftPadding = "12";
 
         this.draw();
@@ -151,6 +151,10 @@ export class LineChart {
                 return new Date(2020, 2, 1);
             case "Aprilie":
                 return new Date(2020, 3, 1);
+            case "Mai":
+                return new Date(2020, 4, 1);
+            case "Iunie":
+                return new Date(2020, 5, 1);
           }
     }
 
