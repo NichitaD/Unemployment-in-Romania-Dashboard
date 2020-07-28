@@ -1,14 +1,14 @@
 import * as d3 from 'd3';
 
-let ianuariePath = "./files/someriIanuarie.csv";
-let februariePath = "./files/someriFebruarie.csv";
-let martiePath = "./files/someriMartie.csv";
-let apriliePath = "./files/someriAprilie.csv";
-let grupuriIanuariePath = "./files/grupeVarstaIanuarie.csv";
-let grupuriFebruariePath = "./files/grupeVarstaFebruarie.csv";
-let grupuriMartiePath = "./files/grupeVarstaMartie.csv";
-let grupuriApriliePath = "./files/grupeVarstaAprilie.csv";
-let romaniaGeoPath = "./files/romania.json";
+let ianuariePath = "files/someriIanuarie.csv";
+let februariePath = "files/someriFebruarie.csv";
+let martiePath = "files/someriMartie.csv";
+let apriliePath = "files/someriAprilie.csv";
+let grupuriIanuariePath = "files/grupeVarstaIanuarie.csv";
+let grupuriFebruariePath = "files/grupeVarstaFebruarie.csv";
+let grupuriMartiePath = "files/grupeVarstaMartie.csv";
+let grupuriApriliePath = "files/grupeVarstaAprilie.csv";
+let romaniaGeoPath = "files/romania.json";
 
 export enum Months {
     January = "Ianuarie",
