@@ -281,7 +281,7 @@ export class MapChart {
         }
 
         // Select new area
-        d3.select(".path-" + newArea).attr("fill", "#00238b");
+        d3.select(".path-" + newArea).attr("fill", "#006AC7");
     }
 
 }
