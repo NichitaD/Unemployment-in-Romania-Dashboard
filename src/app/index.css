@@ -22,7 +22,7 @@ body {
     height: 100%;
     grid-template-columns: repeat(18, 0.5fr) 0.55fr 0.1fr;
     grid-template-rows: repeat(20, 0.5fr);
-    border-bottom: solid #d3d3d3 2px; ;
+    border-bottom: solid #d3d3d3 2px;
 }
 
 .loading {
@@ -568,3 +568,58 @@ div.tooltip {
         transform: translateX(30px);
     }
   }
+
+  /* Mobile setup*/
+ @media only screen and (max-width: 1025px) {
+        .container {
+            display: flex !important;
+            flex-direction: column;
+            overflow: scroll;
+            border-bottom: none;
+        }
+
+        .mainTitle {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .data-source {
+            display: none;
+        }
+
+        .mapChart {
+            border-right: none;
+        }
+
+        .legendContainer {
+            width: 80%;
+            padding: 0;
+        }
+
+        .lineChart {
+            border-top: solid #d3d3d3 2px;
+            padding: 10px 0px 10px 0px !important;
+        }
+
+        .ageGroupsChart {
+            padding: 10px 0px 20px 0px !important;
+        }
+
+        .barGroupTitle {
+            padding-top: 10px;
+        }
+
+        .genderBarChart {
+            padding: 20px 20px 0px 20px;
+        }
+
+        .payBarChart {
+            padding: 20px 20px 0px 20px;
+        }
+
+        .rankingChart {
+            padding: 10px !important;
+            border-left: none;
+            border-top: solid #d3d3d3 2px;
+        }
+ }

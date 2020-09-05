@@ -45,11 +45,13 @@ export class RankingChart {
         }
 
         let screensize = document.documentElement.clientWidth;
-        if (screensize  < 1700) {
+        if (screensize < 1200) {
+            this.width = this.element.offsetWidth - 150;
+            this.height = this.element.offsetWidth * 2;
+        } else if (screensize  < 1700) {
             this.width = this.element.offsetWidth - 150;
             this.height = this.element.offsetHeight - 9;
-        }
-        else {
+        } else {
             this.width = this.element.offsetWidth - 150;
             this.height = this.element.offsetHeight - 20;
         }

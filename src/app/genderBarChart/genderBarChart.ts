@@ -45,6 +45,10 @@ export class GenderBarChart {
         this.width = this.element.offsetWidth;
         this.height = this.element.offsetHeight + 60;
 
+        let screensize = document.documentElement.clientWidth;
+        if (screensize  < 1100) {
+            this.height = this.element.offsetWidth;
+        }
 
 
         // Set up parent element and SVG

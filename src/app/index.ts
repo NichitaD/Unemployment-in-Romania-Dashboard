@@ -13,6 +13,7 @@ const ageGroups = "ageGroups";
 const general = "general";
 const LIGHT = "light";
 const DARK = "dark";
+const MOBILE_ALERT_TEXT = "This visualization might not render correctly because the screen of your device is to small."
 
 export const NR_TOTAL_SOMERI = " Numar total someri ";
 
@@ -42,6 +43,12 @@ let rankingChart: RankingChart;
 let lineChartDataSet: Array<ILineChartData>;
 
 async function init() {
+
+    let screensize = document.documentElement.clientWidth;
+    if (screensize  < 1100) {
+        window.alert(MOBILE_ALERT_TEXT);
+    }
+
     // The display of the container is set to none on initiation, because of the loading gif
     $(".container").css("display","grid");
 

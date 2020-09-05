@@ -67,7 +67,7 @@ export class MapChart {
         }
 
         this.width = this.element.offsetWidth;
-        this.height = this.element.offsetWidth/1.5;
+        this.height = this.element.offsetWidth / 1.5;
 
         this.margin = {
             top: 10,
@@ -78,11 +78,14 @@ export class MapChart {
 
         let scale;
 
+        // Set the values depending on the sreen size
         let screensize = document.documentElement.clientWidth;
-        if (screensize  < 1700) {
+        if (screensize  < 1100) {
+            scale = 2000;
+            this.height = this.element.offsetWidth / 1.2;
+        } else if (screensize  < 1700) {
             scale = 3000;
-        }
-        else {
+        } else {
             scale = 3500;
         }
 
@@ -93,7 +96,7 @@ export class MapChart {
                                 .attr("preserveAspectRatio", "xMinYMin");
 
         let center = d3.geoCentroid(this.geoJson);
-        let offset: [number, number] =  [(this.width/2), this.height - 200];
+        let offset: [number, number] =  [(this.width/2), screensize  < 1100 ? this.height - 140 : this.height - 200];
         let projection = d3.geoMercator().center(center).translate(offset).scale(scale);
 
         let path = d3.geoPath().projection(projection);

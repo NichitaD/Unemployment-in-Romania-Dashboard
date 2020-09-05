@@ -5,6 +5,8 @@ const indemnizati = " Numar  someri indemnizati  ";
 const neindemnizati = " Numar someri neindemnizati ";
 
 export class PayBarChart {
+
+    // Private members
     private data: Array<any>;
     private element: HTMLElement | null;
     private width: number;
@@ -15,6 +17,8 @@ export class PayBarChart {
     private yScale: d3.ScaleLinear<number, number>;
     private selectedArea: string;
     private tooltip: d3.Selection<HTMLDivElement, unknown, HTMLElement, any>;
+    private labelIndemnizati = "Indemnizati";
+    private labelNeindemnizati = "Neindemnizati;"
 
     constructor(data: any, element: HTMLElement | null, selectedArea: string) {
         this.data = data;
@@ -42,6 +46,13 @@ export class PayBarChart {
 
         this.width = this.element.offsetWidth;
         this.height = this.element.offsetHeight + 60;
+
+        let screensize = document.documentElement.clientWidth;
+        if (screensize  < 1100) {
+            this.height = this.element.offsetWidth;
+            this.labelIndemnizati = "Indemn.";
+            this.labelNeindemnizati = "Neindemn.";
+        }
 
         // Set up parent element and SVG
         this.element.innerHTML = '';
@@ -134,13 +145,13 @@ export class PayBarChart {
         });
 
         return [
-            {text: "Indemnizati", value: parseInt(selectedAreaData[indemnizati].replace(",","").trim())},
-            {text: "Neindemnizati", value: parseInt(selectedAreaData[neindemnizati].replace(",","").trim())}
+            {text: this.labelIndemnizati, value: parseInt(selectedAreaData[indemnizati].replace(",","").trim())},
+            {text: this.labelNeindemnizati, value: parseInt(selectedAreaData[neindemnizati].replace(",","").trim())}
         ];
     }
 
     private colorPicker(type: any) {
-        return type == "Indemnizati" ? "	#ffad60": "#6fcb9f";
+        return type == this.labelIndemnizati ? "	#ffad60": "#6fcb9f";
     }
 
     public updateData(newData: any, selectedArea: string) {

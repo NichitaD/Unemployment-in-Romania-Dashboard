@@ -50,6 +50,11 @@ export class LineChart {
             left: 80
         };
 
+        let screensize = document.documentElement.clientWidth;
+        if (screensize  < 1100) {
+            this.height = this.element.offsetWidth / 2;
+        }
+
         // Set up parent element and SVG
         var svg = d3.select(this.element).append('svg');
         svg.attr("viewBox", "0 0 " + (this.width + this.margin.left + this.margin.right) + " " + this.height )
