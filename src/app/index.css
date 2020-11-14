@@ -9,9 +9,10 @@
   --lines-color: #a6bddb;
   --link-color: #5c2a9d;
   --ageChartBar: #005d7d;
+  --selectedAreaColor: #394867;
 }
 .dark-theme {
-  /*Light theme collors*/
+  /*Dark theme collors*/
   --button-color: #3cbbe1;
   --background-color: #003545;
   --map-color-first: #dbedf3;
@@ -21,6 +22,7 @@
   --lines-color: #fbc687;
   --link-color: #f6c90e;
   --ageChartBar: #29c7ac;
+  --selectedAreaColor: #394867;
 }
 
 body {
@@ -240,6 +242,10 @@ div.tooltip {
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   transition: color 0.7s;
+}
+
+.mapChart path {
+  transition: fill 0.7s;
 }
 
 .data-source a {

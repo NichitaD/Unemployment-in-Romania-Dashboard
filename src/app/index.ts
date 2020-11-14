@@ -40,7 +40,7 @@ let groupsSeptemberData: any;
 let mapJson;
 let selectedArea = "Romania";
 let selectedMonth = "January";
-let theme = LIGHT;
+let theme = DARK;
 let lineChart: LineChart;
 let mapChart: MapChart;
 let ageGroupsChart: AgeGroupsChart;
@@ -158,6 +158,7 @@ async function init() {
 
   window.setTimeout(() => {
     $(".loading").css("display", "none");
+    $(".container").css("visibility", "visible");
   }, 1500);
 }
 
