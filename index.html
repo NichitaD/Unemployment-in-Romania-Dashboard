@@ -1,56 +1,78 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Unemployment in Romania 2020</title>
-    <link rel="icon" type="image/png" href="./img/favicon.png"/>
-</head>
-<body>
-    <div class="loading"  style="height: 100%">
-        <img src="./img/loading.gif" style="position: absolute;  top: 45%; right: 0; left: 0; margin-left:auto; margin-right:auto;">
-      </div>
+    <link rel="icon" type="image/png" href="./img/favicon.png" />
+  </head>
+  <body>
+    <div class="loading" style="height: 100%">
+      <img
+        src="./img/loading.gif"
+        style="
+          position: absolute;
+          top: 45%;
+          right: 0;
+          left: 0;
+          margin-left: auto;
+          margin-right: auto;
+        "
+      />
+    </div>
     <div class="container" style="display: none">
-        <div class="topBar">
-            <label class="switch">
-                <input type="checkbox" id="switch"/>
-                <span class="slider round"></span>
-            </label>
-            <div class="mainTitle">Romania's unemployment rates in 2020</div>
+      <div class="topBar">
+        <label class="switch">
+          <input type="checkbox" id="switch" />
+          <span class="slider round"></span>
+        </label>
+        <div class="mainTitle">Romania's unemployment rates in 2020</div>
+      </div>
+      <div class="mapChart">
+        <!-- Dropdown -->
+        <div class="dropdown">
+          Select month:
+          <select id="month">
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+          </select>
         </div>
-        <div class="mapChart">
-            <!-- Dropdown -->
-            <div class="dropdown"> Select month:
-                <select id="month">
-                    <option value="January">January</option>
-                    <option value="February">February</option>
-                    <option value="March">March</option>
-                    <option value="April">April</option>
-                    <option value="May">May</option>
-                    <option value="June">June</option>
-                </select>
-            </div>
-            <div class="map"></div>
-            <div class="legendContainer">
-                <svg id="mapLegend"></svg>
-            </div>
-            <div id="mapText"></div>
-            <div class="data-source">Data source: <a target="_blank" rel="noopener noreferrer" href="https://data.gov.ro/organization/agentia-nationala-pentru-ocuparea-fortei-de-munca">data.gov.ro/organization/agentia-nationala-pentru-ocuparea-fortei-de-munca</a></div>
+        <div class="map"></div>
+        <div class="legendContainer">
+          <svg id="mapLegend"></svg>
         </div>
-        <div class="lineChart">
-            <div class="lineChartTitle"></div>
+        <div id="mapText"></div>
+        <div class="data-source">
+          Data source:
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://data.gov.ro/organization/agentia-nationala-pentru-ocuparea-fortei-de-munca"
+            >data.gov.ro/organization/agentia-nationala-pentru-ocuparea-fortei-de-munca</a
+          >
         </div>
-        <div class="ageGroupsChart">
-            <div class="ageChartTitle"></div>
-        </div>
-        <div class="barGroupTitle"></div>
-        <div class="barChartsGroup">
-            <div class="genderBarChart"></div>
-            <div class="payBarChart"></div>
-        </div>
-        <div class="rankingChart">
-            <div class="rankingChartTitle"></div>
-        </div>
+      </div>
+      <div class="lineChart">
+        <div class="lineChartTitle"></div>
+      </div>
+      <div class="ageGroupsChart">
+        <div class="ageChartTitle"></div>
+      </div>
+      <div class="barGroupTitle"></div>
+      <div class="barChartsGroup">
+        <div class="genderBarChart"></div>
+        <div class="payBarChart"></div>
+      </div>
+      <div class="rankingChart">
+        <div class="rankingChartTitle"></div>
+      </div>
     </div>
     <script src="bundle.js"></script>
-</body>
+  </body>
 </html>
