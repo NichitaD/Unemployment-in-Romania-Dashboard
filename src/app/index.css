@@ -9,7 +9,7 @@
   --lines-color: #a6bddb;
   --link-color: #5c2a9d;
   --ageChartBar: #005d7d;
-  --selectedAreaColor: #394867;
+  --selectedAreaColor: #34626c;
 }
 .dark-theme {
   /*Dark theme collors*/
@@ -22,7 +22,7 @@
   --lines-color: #fbc687;
   --link-color: #f6c90e;
   --ageChartBar: #29c7ac;
-  --selectedAreaColor: #394867;
+  --selectedAreaColor: #34626c;
 }
 
 body {
