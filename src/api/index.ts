@@ -1,24 +1,26 @@
 import * as d3 from "d3";
 
-let ianuariePath = "files/someriIanuarie.csv";
-let februariePath = "files/someriFebruarie.csv";
-let martiePath = "files/someriMartie.csv";
-let apriliePath = "files/someriAprilie.csv";
-let maiPath = "files/someriMai.csv";
-let iuniePath = "files/someriIunie.csv";
-let iuliePath = "files/someriIulie.csv";
-let augustPath = "files/someriAugust.csv";
-let septembriePath = "files/someriSeptembrie.csv";
-let grupuriIanuariePath = "files/grupeVarstaIanuarie.csv";
-let grupuriFebruariePath = "files/grupeVarstaFebruarie.csv";
-let grupuriMartiePath = "files/grupeVarstaMartie.csv";
-let grupuriApriliePath = "files/grupeVarstaAprilie.csv";
-let grupuriMaiPath = "files/grupeVarstaMai.csv";
-let grupuriIuniePath = "files/grupeVarstaIunie.csv";
-let grupuriIuliePath = "files/grupeVarstaIulie.csv";
-let grupuriAugustPath = "files/grupeVarstaAugust.csv";
-let grupuriSeptembriePath = "files/grupeVarstaSeptembrie.csv";
-let romaniaGeoPath = "files/romania.json";
+const ianuariePath = "files/someriIanuarie.csv";
+const februariePath = "files/someriFebruarie.csv";
+const martiePath = "files/someriMartie.csv";
+const apriliePath = "files/someriAprilie.csv";
+const maiPath = "files/someriMai.csv";
+const iuniePath = "files/someriIunie.csv";
+const iuliePath = "files/someriIulie.csv";
+const augustPath = "files/someriAugust.csv";
+const septembriePath = "files/someriSeptembrie.csv";
+const octoberPath = "files/someriOctombrie.csv";
+const grupuriIanuariePath = "files/grupeVarstaIanuarie.csv";
+const grupuriFebruariePath = "files/grupeVarstaFebruarie.csv";
+const grupuriMartiePath = "files/grupeVarstaMartie.csv";
+const grupuriApriliePath = "files/grupeVarstaAprilie.csv";
+const grupuriMaiPath = "files/grupeVarstaMai.csv";
+const grupuriIuniePath = "files/grupeVarstaIunie.csv";
+const grupuriIuliePath = "files/grupeVarstaIulie.csv";
+const grupuriAugustPath = "files/grupeVarstaAugust.csv";
+const grupuriSeptembriePath = "files/grupeVarstaSeptembrie.csv";
+const grupuriOctoberPath = "files/grupeVarstaOctombrie.csv";
+const romaniaGeoPath = "files/romania.json";
 
 export enum Months {
   January = "Ianuarie",
@@ -30,6 +32,7 @@ export enum Months {
   July = "Iulie",
   August = "August",
   September = "Septembrie",
+  October = "Octombrie",
 }
 
 /**
@@ -45,6 +48,7 @@ export class API {
   private someriIulie: any;
   private someriAugust: any;
   private someriSeptembrie: any;
+  private someriOctombrie: any;
   private grupuriIanuarie: any;
   private grupuriFebruarie: any;
   private grupuriAprilie: any;
@@ -54,6 +58,7 @@ export class API {
   private grupuriIulie: any;
   private grupuriAugust: any;
   private grupuriSeptembrie: any;
+  private grupuriOctombrie: any;
 
   constructor() {}
 
@@ -118,6 +123,11 @@ export class API {
         return this.someriSeptembrie
           ? this.someriSeptembrie
           : d3.csv(septembriePath, (data) => (this.someriSeptembrie = data));
+      }
+      case Months.October: {
+        return this.someriOctombrie
+          ? this.someriOctombrie
+          : d3.csv(octoberPath, (data) => (this.someriSeptembrie = data));
       }
     }
   }
@@ -184,6 +194,14 @@ export class API {
           ? this.grupuriSeptembrie
           : d3.csv(
               grupuriSeptembriePath,
+              (data) => (this.grupuriSeptembrie = data)
+            );
+      }
+      case Months.October: {
+        return this.grupuriOctombrie
+          ? this.grupuriOctombrie
+          : d3.csv(
+              grupuriOctoberPath,
               (data) => (this.grupuriSeptembrie = data)
             );
       }

@@ -28,6 +28,7 @@ let juneData: any;
 let julyData: any;
 let augustData: any;
 let septemberData: any;
+let octoberData: any;
 let groupsJanuaryData: any;
 let groupsFebruaryData: any;
 let groupsMarchData: any;
@@ -37,6 +38,7 @@ let groupsJuneData: any;
 let groupsJulyData: any;
 let groupsAugustData: any;
 let groupsSeptemberData: any;
+let groupsOctoberData: any;
 let mapJson;
 let selectedArea = "Romania";
 let selectedMonth = "January";
@@ -67,6 +69,7 @@ async function init() {
   julyData = await api.getDataByMonth(Months.July);
   augustData = await api.getDataByMonth(Months.August);
   septemberData = await api.getDataByMonth(Months.September);
+  octoberData = await api.getDataByMonth(Months.October);
   groupsJanuaryData = await api.getAgeGroupsDataByMonth(Months.January);
   groupsFebruaryData = await api.getAgeGroupsDataByMonth(Months.February);
   groupsMarchData = await api.getAgeGroupsDataByMonth(Months.March);
@@ -76,6 +79,7 @@ async function init() {
   groupsJulyData = await api.getAgeGroupsDataByMonth(Months.July);
   groupsAugustData = await api.getAgeGroupsDataByMonth(Months.August);
   groupsSeptemberData = await api.getAgeGroupsDataByMonth(Months.September);
+  groupsOctoberData = await api.getAgeGroupsDataByMonth(Months.October);
 
   mapJson = await api.getGeoJson();
 
@@ -115,6 +119,10 @@ async function init() {
     {
       month: Months.September,
       data: septemberData,
+    },
+    {
+      month: Months.October,
+      data: octoberData,
     },
   ];
 
@@ -256,6 +264,10 @@ function getDataByMonth(month: string, dataType: string) {
 
     case "September": {
       return dataType === general ? septemberData : groupsSeptemberData;
+    }
+
+    case "October": {
+      return dataType === general ? octoberData : groupsOctoberData;
     }
   }
 }
