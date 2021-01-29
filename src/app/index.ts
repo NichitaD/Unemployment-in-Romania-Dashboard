@@ -1,12 +1,12 @@
 import $ from "jquery";
 import * as d3 from "d3";
 import { API, Months } from "../api/index";
-import { LineChart } from "./lineChart/lineChart";
-import { MapChart } from "./mapChart/mapChart";
-import { AgeGroupsChart } from "./ageGroupsChart/ageGourpsChart";
-import { GenderBarChart } from "./genderBarChart/genderBarChart";
-import { PayBarChart } from "./payBarChart/payBarChart";
-import { RankingChart } from "./rankingChart/rankingChart";
+import { LineChart } from "./charts/lineChart";
+import { MapChart } from "./charts/mapChart";
+import { AgeGroupsChart } from "./charts/ageGroupsChart";
+import { GenderBarChart } from "./charts/genderBarChart";
+import { PayBarChart } from "./charts/payBarChart";
+import { RankingChart } from "./charts/rankingChart";
 import { ILineChartData } from "./types";
 const css = require("./index.css").toString();
 const ageGroups = "ageGroups";
@@ -29,6 +29,8 @@ let julyData: any;
 let augustData: any;
 let septemberData: any;
 let octoberData: any;
+let novemberData: any;
+let decemberData: any;
 let groupsJanuaryData: any;
 let groupsFebruaryData: any;
 let groupsMarchData: any;
@@ -39,6 +41,8 @@ let groupsJulyData: any;
 let groupsAugustData: any;
 let groupsSeptemberData: any;
 let groupsOctoberData: any;
+let groupsNovemberData: any;
+let groupsDecemberData: any;
 let mapJson;
 let selectedArea = "Romania";
 let selectedMonth = "January";
@@ -52,8 +56,8 @@ let rankingChart: RankingChart;
 let lineChartDataSet: Array<ILineChartData>;
 
 async function init() {
-  let screensize = document.documentElement.clientWidth;
-  if (screensize < 1100) {
+  let screenSize = document.documentElement.clientWidth;
+  if (screenSize < 1100) {
     window.alert(MOBILE_ALERT_TEXT);
   }
 
@@ -70,6 +74,8 @@ async function init() {
   augustData = await api.getDataByMonth(Months.August);
   septemberData = await api.getDataByMonth(Months.September);
   octoberData = await api.getDataByMonth(Months.October);
+  novemberData = await api.getDataByMonth(Months.November);
+  decemberData = await api.getDataByMonth(Months.December);
   groupsJanuaryData = await api.getAgeGroupsDataByMonth(Months.January);
   groupsFebruaryData = await api.getAgeGroupsDataByMonth(Months.February);
   groupsMarchData = await api.getAgeGroupsDataByMonth(Months.March);
@@ -80,6 +86,8 @@ async function init() {
   groupsAugustData = await api.getAgeGroupsDataByMonth(Months.August);
   groupsSeptemberData = await api.getAgeGroupsDataByMonth(Months.September);
   groupsOctoberData = await api.getAgeGroupsDataByMonth(Months.October);
+  groupsNovemberData = await api.getAgeGroupsDataByMonth(Months.November);
+  groupsDecemberData = await api.getAgeGroupsDataByMonth(Months.December);
 
   mapJson = await api.getGeoJson();
 
@@ -123,6 +131,14 @@ async function init() {
     {
       month: Months.October,
       data: octoberData,
+    },
+    {
+      month: Months.November,
+      data: novemberData,
+    },
+    {
+      month: Months.December,
+      data: decemberData,
     },
   ];
 
@@ -268,6 +284,14 @@ function getDataByMonth(month: string, dataType: string) {
 
     case "October": {
       return dataType === general ? octoberData : groupsOctoberData;
+    }
+
+    case "November": {
+      return dataType === general ? novemberData : groupsNovemberData;
+    }
+
+    case "December": {
+      return dataType === general ? decemberData : groupsDecemberData;
     }
   }
 }

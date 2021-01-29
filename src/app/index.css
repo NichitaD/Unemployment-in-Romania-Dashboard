@@ -273,6 +273,7 @@ div.tooltip {
   grid-row-start: 8;
   grid-row-end: 13;
   padding: 0px 10px 20px 10px;
+  overflow: hidden;
 }
 
 .ageGroupsChart .y-axis line,
@@ -619,6 +620,7 @@ div.tooltip {
 
   .ageGroupsChart {
     padding: 10px 0px 20px 0px !important;
+    flex-shrink: 0;
   }
 
   .barGroupTitle {

@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { NR_TOTAL_SOMERI } from "../index";
-import { JUDET } from "../mapChart/mapChart";
-import { ROMANIA_CODE } from "../mapChart/mapChart";
+import { JUDET } from "./mapChart";
+import { ROMANIA_CODE } from "./mapChart";
 /**
  * A class that builds a line chart based on the received parameters
  */
@@ -27,7 +27,7 @@ export class LineChart {
     this.width = 0;
     this.selectedArea = selectedArea;
     this.minDate = new Date("2020-01-01T00:00:00Z"); // January 2020
-    this.maxDate = new Date("2020-10-01T00:00:00Z"); // September 2020
+    this.maxDate = new Date("2020-12-01T00:00:00Z"); // December 2020
     this.leftPadding = "12";
 
     this.draw();
@@ -113,7 +113,7 @@ export class LineChart {
   }
 
   private addAxes() {
-    var xAxis = d3.axisBottom(this.xScale).scale(this.xScale).ticks(6);
+    var xAxis = d3.axisBottom(this.xScale).scale(this.xScale).ticks(8);
     (xAxis as any).tickFormat(d3.timeFormat("%b"));
     var yAxis = d3.axisLeft(this.yScale).ticks(6);
 
@@ -211,6 +211,10 @@ export class LineChart {
         return new Date(2020, 8, 1);
       case "Octombrie":
         return new Date(2020, 9, 1);
+      case "Noiembrie":
+        return new Date(2020, 10, 1);
+      case "Decembrie":
+        return new Date(2020, 11, 1);
     }
   }
 

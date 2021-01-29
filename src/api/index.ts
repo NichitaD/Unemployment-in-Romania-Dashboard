@@ -10,6 +10,8 @@ const iuliePath = "files/someriIulie.csv";
 const augustPath = "files/someriAugust.csv";
 const septembriePath = "files/someriSeptembrie.csv";
 const octoberPath = "files/someriOctombrie.csv";
+const noiembriePath = "files/someriNoiembrie.csv";
+const decembriePath = "files/someriDecembrie.csv";
 const grupuriIanuariePath = "files/grupeVarstaIanuarie.csv";
 const grupuriFebruariePath = "files/grupeVarstaFebruarie.csv";
 const grupuriMartiePath = "files/grupeVarstaMartie.csv";
@@ -20,6 +22,8 @@ const grupuriIuliePath = "files/grupeVarstaIulie.csv";
 const grupuriAugustPath = "files/grupeVarstaAugust.csv";
 const grupuriSeptembriePath = "files/grupeVarstaSeptembrie.csv";
 const grupuriOctoberPath = "files/grupeVarstaOctombrie.csv";
+const grupuriNoiembriePath = "files/grupeVarstaNoiembrie.csv";
+const grupuriDecembriePath = "files/grupeVarstaDecembrie.csv";
 const romaniaGeoPath = "files/romania.json";
 
 export enum Months {
@@ -33,6 +37,8 @@ export enum Months {
   August = "August",
   September = "Septembrie",
   October = "Octombrie",
+  November = "Noiembrie",
+  December = "Decembrie",
 }
 
 /**
@@ -49,6 +55,8 @@ export class API {
   private someriAugust: any;
   private someriSeptembrie: any;
   private someriOctombrie: any;
+  private someriNoiembrie: any;
+  private someriDecembrie: any;
   private grupuriIanuarie: any;
   private grupuriFebruarie: any;
   private grupuriAprilie: any;
@@ -59,6 +67,8 @@ export class API {
   private grupuriAugust: any;
   private grupuriSeptembrie: any;
   private grupuriOctombrie: any;
+  private grupuriNoiembrie: any;
+  private grupuriDecembrie: any;
 
   constructor() {}
 
@@ -127,7 +137,17 @@ export class API {
       case Months.October: {
         return this.someriOctombrie
           ? this.someriOctombrie
-          : d3.csv(octoberPath, (data) => (this.someriSeptembrie = data));
+          : d3.csv(octoberPath, (data) => (this.someriOctombrie = data));
+      }
+      case Months.November: {
+        return this.someriNoiembrie
+          ? this.someriOctombrie
+          : d3.csv(noiembriePath, (data) => (this.someriNoiembrie = data));
+      }
+      case Months.December: {
+        return this.someriDecembrie
+          ? this.someriOctombrie
+          : d3.csv(decembriePath, (data) => (this.someriDecembrie = data));
       }
     }
   }
@@ -202,7 +222,23 @@ export class API {
           ? this.grupuriOctombrie
           : d3.csv(
               grupuriOctoberPath,
-              (data) => (this.grupuriSeptembrie = data)
+              (data) => (this.grupuriOctombrie = data)
+            );
+      }
+      case Months.November: {
+        return this.grupuriNoiembrie
+          ? this.grupuriNoiembrie
+          : d3.csv(
+              grupuriNoiembriePath,
+              (data) => (this.grupuriNoiembrie = data)
+            );
+      }
+      case Months.December: {
+        return this.grupuriDecembrie
+          ? this.grupuriDecembrie
+          : d3.csv(
+              grupuriDecembriePath,
+              (data) => (this.grupuriDecembrie = data)
             );
       }
     }
