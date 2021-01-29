@@ -127,11 +127,11 @@ export class GenderBarChart {
       .append("rect")
       .attr("x", (d: any): number => this.xScale(d["text"]) || 0)
       .attr("y", (d: any) => {
-        return this.yScale(d["value"]);
+        return this.yScale(d["value"])!;
       })
       .attr("width", this.xScale.bandwidth() - 6)
       .attr("height", (d: any) => {
-        return this.height - this.yScale(d["value"]);
+        return this.height - this.yScale(d["value"])!;
       })
       .attr("fill", (d: any) => this.colorPicker(d["text"]));
 
@@ -216,7 +216,7 @@ export class GenderBarChart {
       })
       .attr("width", this.xScale.bandwidth() - 6)
       .attr("height", (d: any) => {
-        return this.height - this.yScale(d["value"]);
+        return this.height - this.yScale(d["value"])!;
       })
       .attr("fill", (d: any) => this.colorPicker(d["text"]));
 

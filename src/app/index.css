@@ -324,6 +324,7 @@ div.tooltip {
   grid-column-end: 16;
   grid-row-start: 14;
   grid-row-end: 21;
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   margin-top: 10px;
