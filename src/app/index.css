@@ -70,6 +70,7 @@ body {
   border-bottom: solid #d3d3d3 1px;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .mainTitle {
@@ -251,6 +252,11 @@ input:checked + .slider:before {
 
   .barGroupTitle {
     padding-top: 10px;
+    flex-shrink: 0;
+  }
+
+  .barChartsGroup {
+    margin-top: 10px;
   }
 
   .genderBarChart {
