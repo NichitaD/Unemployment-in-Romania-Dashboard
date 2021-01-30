@@ -27,6 +27,11 @@
   font-weight: 700;
 }
 
+.barChartsGroup rect {
+  transition: fill 0.3s;
+  cursor: pointer;
+}
+
 /* Gender bar chart */
 .genderBarChart {
   width: 50%;
@@ -53,6 +58,14 @@
   cursor: pointer;
 }
 
+.genderBarChart rect:first-of-type:hover {
+  fill: #3fcccc;
+}
+
+.genderBarChart rect:nth-of-type(2):hover {
+  fill: #f04a41;
+}
+
 /* Pay Barchart */
 
 .payBarChart {
@@ -75,9 +88,10 @@
   display: none;
 }
 
-.payBarChart rect:hover {
-  cursor: pointer;
-  -moz-box-shadow: -5px -5px 5px #888;
-  -webkit-box-shadow: -5px -5px 5px #888;
-  box-shadow: -5px -5px 5px #888;
+.payBarChart rect:first-of-type:hover {
+  fill: #ff8d03;
+}
+
+.payBarChart rect:nth-of-type(2):hover {
+  fill: #36c781;
 }

@@ -34,11 +34,15 @@
 
 .ageGroupsChart rect {
   fill: var(--ageChartBar);
-  transition: fill 0.7s, color 0.7s, width 0.7s;
+  transition: fill 0.7s, color 0.7s, width 0.7s, opacity 0.1s;
   transition-timing-function: ease;
 }
 
-.ageChartTitle {
+.ageGroupsChart rect:hover {
+  opacity: 0.8;
+}
+
+.ag .ageChartTitle {
   text-align: center;
   font-size: 18px;
   font-weight: 700;
