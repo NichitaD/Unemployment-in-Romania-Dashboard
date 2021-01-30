@@ -1,0 +1,45 @@
+/* Ranking chart styles */
+
+.rankingChart {
+  grid-column-start: 16;
+  grid-column-end: 20;
+  grid-row-start: 2;
+  grid-row-end: 21;
+  border-left: solid #d3d3d3 1px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  flex-shrink: 0;
+}
+
+.rankingChart .bar {
+  padding: 10px;
+}
+
+.rankingChart rect {
+  padding: 10px;
+  transition: stroke 0.7s;
+}
+
+.rankingChart .y-axis path,
+.rankingChart .y-axis line {
+  display: none;
+}
+
+.rankingChart .label {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rankingChart text {
+  font-size: 16px;
+  font-weight: 600;
+  transition: fill 0.7s;
+  fill: var(--text-color);
+}
+
+.rankingChart .rankingChartTitle {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+}

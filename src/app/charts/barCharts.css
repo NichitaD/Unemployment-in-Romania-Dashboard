@@ -1,0 +1,83 @@
+/* Bar charts styles */
+.barChartsGroup {
+  grid-column-start: 9;
+  grid-column-end: 16;
+  grid-row-start: 14;
+  grid-row-end: 21;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 0px 20px 0px 10px;
+  flex-shrink: 0;
+}
+
+.barGroupTitle {
+  grid-column-start: 9;
+  grid-column-end: 16;
+  grid-row-start: 13;
+  grid-row-end: 14;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-top: solid #d3d3d3 1px;
+  font-size: 18px;
+  margin: 0px 10px;
+  font-weight: 700;
+}
+
+/* Gender bar chart */
+.genderBarChart {
+  width: 50%;
+  padding: 20px 20px 20px 20px;
+  border-right: solid #d3d3d3 1px;
+  font-size: 18px;
+}
+
+.genderBarChart text {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.genderBarChart .x-axis text {
+  font-size: 22px;
+}
+
+.genderBarChart .x-axis path,
+.genderBarChart .x-axis line {
+  display: none;
+}
+
+.genderBarChart rect:hover {
+  cursor: pointer;
+}
+
+/* Pay Barchart */
+
+.payBarChart {
+  width: 50%;
+  padding: 20px 20px 20px 20px;
+  font-size: 18px;
+}
+
+.payBarChart text {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.payBarChart .x-axis text {
+  font-size: 22px;
+}
+
+.payBarChart .x-axis path,
+.payBarChart .x-axis line {
+  display: none;
+}
+
+.payBarChart rect:hover {
+  cursor: pointer;
+  -moz-box-shadow: -5px -5px 5px #888;
+  -webkit-box-shadow: -5px -5px 5px #888;
+  box-shadow: -5px -5px 5px #888;
+}

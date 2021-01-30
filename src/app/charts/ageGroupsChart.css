@@ -1,0 +1,50 @@
+/* Age chart styles */
+
+.ageGroupsChart {
+  grid-column-start: 9;
+  grid-column-end: 16;
+  grid-row-start: 8;
+  grid-row-end: 13;
+  padding: 0px 10px 20px 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ageGroupsChart .y-axis line,
+.ageGroupsChart .y-axis path {
+  display: none;
+}
+
+.ageGroupsChart svg {
+  overflow: visible;
+  display: block;
+  margin: auto;
+}
+
+.ageGroupsChart .label {
+  font-size: 12px;
+  fill: var(--background-color);
+  transition: fill 0.7s, color 0.7s, opacity 0.5s;
+}
+
+.ageGroupsChart text {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ageGroupsChart rect {
+  fill: var(--ageChartBar);
+  transition: fill 0.7s, color 0.7s, width 0.7s;
+  transition-timing-function: ease;
+}
+
+.ageChartTitle {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.ageGroupsChart .y-axis {
+  transform: translate(0px, -2px);
+}

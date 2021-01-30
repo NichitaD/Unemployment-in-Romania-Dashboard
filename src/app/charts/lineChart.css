@@ -1,0 +1,39 @@
+/* Line Chart styles*/
+
+.lineChart {
+  grid-column-start: 9;
+  grid-column-end: 16;
+  grid-row-start: 2;
+  grid-row-end: 8;
+  padding: 0px 20px 20px 10px;
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-bottom: solid #d3d3d3 1px;
+  flex-shrink: 0;
+}
+
+.lineChartTitle {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.line-chart-dots {
+  fill: var(--dots-color);
+  transition: fill 0.7s, color 0.7s;
+}
+
+.line-path {
+  stroke: var(--lines-color);
+  transition: stroke 0.7s, color 0.7s;
+}
+
+circle:hover {
+  cursor: pointer;
+}
+
+.lineChart text {
+  font-size: 16px;
+  font-weight: 600;
+}

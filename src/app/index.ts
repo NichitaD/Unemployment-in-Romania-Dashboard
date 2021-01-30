@@ -183,7 +183,7 @@ async function init() {
   window.setTimeout(() => {
     $(".loading").css("display", "none");
     $(".container").css("visibility", "visible");
-  }, 1500);
+  }, 1300);
 }
 
 function setTitles() {
