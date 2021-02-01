@@ -167,12 +167,12 @@ input:checked + .slider:before {
   }
 
   #mapText {
-    font-size: 17px;
+    font-size: 19px;
     margin-top: 40px;
   }
 
   #mapText strong {
-    font-size: 19px;
+    font-size: 21px;
   }
 
   .lineChart {
@@ -224,11 +224,18 @@ input:checked + .slider:before {
 
   .topBar {
     align-items: start;
+    flex-direction: column-reverse;
   }
 
   .mainTitle {
-    font-size: 25px;
+    font-size: 30px;
     margin-bottom: 10px;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .dropdown {
+    align-items: center;
   }
 
   .data-source {
@@ -245,13 +252,17 @@ input:checked + .slider:before {
   }
 
   .lineChart {
-    border-top: solid #d3d3d3 2px;
+    border-top: solid #d3d3d3 1px;
     padding: 10px 0px 10px 0px !important;
   }
 
   .ageGroupsChart {
-    padding: 10px 0px 20px 0px !important;
     flex-shrink: 0;
+    padding: 0px 0px 20px 0px !important;
+  }
+
+  .ageChartTitle {
+    padding: 0px 6px;
   }
 
   .barGroupTitle {
@@ -274,6 +285,10 @@ input:checked + .slider:before {
   .rankingChart {
     padding: 10px !important;
     border-left: none;
-    border-top: solid #d3d3d3 2px;
+    border-top: solid #d3d3d3 1px;
+  }
+
+  .rankingChart svg {
+    overflow: visible;
   }
 }
